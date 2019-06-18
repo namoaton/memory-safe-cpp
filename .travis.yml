@@ -31,7 +31,7 @@ script:
     fi
   - cmake --build .
   - if [ $TRAVIS_OS_NAME == "windows" ] ; then
-      build\\bin\\Debug\\ test_safe_memory.bin.exe ;
+      build\\bin\\Debug\\test_safe_memory.bin.exe ;
     else
       make test ;
     fi
