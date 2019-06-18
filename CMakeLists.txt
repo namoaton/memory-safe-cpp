@@ -13,7 +13,6 @@ add_subdirectory(${PROJECT_SOURCE_DIR}/library/src/iibmalloc build)
 
 if(MSVC OR MSYS OR MINGW)
 	option(CMAKE_USE_WIN32_THREADS_INIT "using WIN32 threads" ON)
-	set(SOURCE_LIB src/page_allocator_windows.cpp src/iibmalloc_windows.cpp )
 	add_definitions(/W3)
 	add_definitions(/EHa)
 	add_definitions(/MD)
@@ -71,7 +70,7 @@ if (UNIX)
 	set_target_properties ( ${TEST_BIN_NAME} PROPERTIES COMPILE_FLAGS   ${CMAKE_CXX_FLAGS_RELEASE} )
 	set_target_properties ( ${TEST_BIN_NAME_WITH_LTO} PROPERTIES COMPILE_FLAGS  "${CMAKE_CXX_FLAGS_RELEASE} -flto")
 	set_target_properties ( ${TEST_BIN_NAME_WITH_LTO_WORKAROUND} PROPERTIES COMPILE_FLAGS  "${CMAKE_CXX_FLAGS_RELEASE} -flto")
-	
+
 endif (UNIX)
 
 target_compile_options(${TEST_BIN_NAME} PRIVATE -pthread)
