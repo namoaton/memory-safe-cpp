@@ -57,15 +57,21 @@ add_executable(${TEST_BIN_NAME_WITH_LTO_WORKAROUND} ${SOURCE_EXE})
 
 add_library( ${LIB_NAME} SHARED ${SOURCE_LIB})
 
-target_link_libraries( ${TEST_BIN_NAME} iibmalloc pthread)
-target_link_libraries( ${TEST_BIN_NAME_WITH_LTO} iibmalloc pthread)
-target_link_libraries( ${TEST_BIN_NAME_WITH_LTO_WORKAROUND} iibmalloc ${LIB_NAME} pthread)
+target_link_libraries( ${TEST_BIN_NAME} iibmalloc )
+target_link_libraries( ${TEST_BIN_NAME_WITH_LTO} iibmalloc )
+target_link_libraries( ${TEST_BIN_NAME_WITH_LTO_WORKAROUND} iibmalloc ${LIB_NAME} )
 
 if (UNIX)
+
+	target_link_libraries( ${TEST_BIN_NAME}  pthread)
+	target_link_libraries( ${TEST_BIN_NAME_WITH_LTO}  pthread)
+	target_link_libraries( ${TEST_BIN_NAME_WITH_LTO_WORKAROUND}  ${LIB_NAME} pthread)
+
 	set_target_properties ( ${LIB_NAME} PROPERTIES COMPILE_FLAGS  "-fpic ")
 	set_target_properties ( ${TEST_BIN_NAME} PROPERTIES COMPILE_FLAGS   ${CMAKE_CXX_FLAGS_RELEASE} )
 	set_target_properties ( ${TEST_BIN_NAME_WITH_LTO} PROPERTIES COMPILE_FLAGS  "${CMAKE_CXX_FLAGS_RELEASE} -flto")
 	set_target_properties ( ${TEST_BIN_NAME_WITH_LTO_WORKAROUND} PROPERTIES COMPILE_FLAGS  "${CMAKE_CXX_FLAGS_RELEASE} -flto")
+	
 endif (UNIX)
 
 target_compile_options(${TEST_BIN_NAME} PRIVATE -pthread)
