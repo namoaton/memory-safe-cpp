@@ -71,6 +71,11 @@ endif (UNIX)
 target_compile_options(${TEST_BIN_NAME} PRIVATE -pthread)
 target_link_libraries(${TEST_BIN_NAME} ${LIB_NAME})
 
+if(MSVC OR MSYS OR MINGW)
+	set_target_properties(${TEST_BIN_NAME} PROPERTIES EXCLUDE_FROM_ALL TRUE)
+	set_target_properties(${TEST_BIN_NAME_WITH_LTO_WORKAROUND}  PROPERTIES EXCLUDE_FROM_ALL TRUE)
+endif(MSVC OR MSYS OR MINGW)
+
 if(UNIX)
 	add_test( safe_memory_test "${CMAKE_BINARY_DIR}/build/bin/${TEST_BIN_NAME}" )
 	add_test( safe_memory_test_lto "${CMAKE_BINARY_DIR}/build/bin/${TEST_BIN_NAME_WITH_LTO}" )
